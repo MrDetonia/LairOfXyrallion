@@ -31,7 +31,9 @@ enum CreatureTypes {
 class Creature {
     char _type;
     unsigned char _hp;
+    unsigned char _max_hp;
     unsigned char _mp;
+    unsigned char _max_mp;
     unsigned int _xp;
     Vector2D _pos;
 
@@ -44,12 +46,16 @@ class Creature {
     unsigned char _cha;
 
 public:
+    Creature(char type);
+    
     void AddPos(int x, int y) {_pos.x += x; _pos.y += y;};
     void Pos(Vector2D pos) {_pos = pos;};
     
     char Type() const {return _type;};
     unsigned char Hp() const {return _hp;};
+    unsigned char MaxHp() const {return _max_hp;};
     unsigned char Mp() const {return _mp;};
+    unsigned char MaxMp() const {return _max_mp;};
     unsigned char Xp() const {return _xp;};
     Vector2D Pos() const {return _pos;};
     unsigned char Str() const {return _str;};

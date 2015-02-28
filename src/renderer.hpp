@@ -19,6 +19,7 @@ public:
     void DrawCharacter(Character character);
     int GetKey();
     void Write(std::string msg, int x, int y);
+    void DisplayStats(Character player);
 };
 
 #endif

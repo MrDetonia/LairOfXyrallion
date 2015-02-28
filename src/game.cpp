@@ -1,7 +1,7 @@
 #include "game.hpp"
 
 Game::Game() :
-    _player("Tim")
+    _player("Player")
 {
     Level tmp(80, 21);
     _dungeon.push_back(tmp);
@@ -18,6 +18,7 @@ int Game::Execute() {
     bool running = true;
     while(running) {
         _renderer.UpdateMap(_dungeon[level]);
+        _renderer.DisplayStats(_player);
         std::string msg = "DLvl: " + std::to_string(level + 1) + "  ";
         _renderer.Write(msg, 0, 23);
         _renderer.DrawCharacter(_player);
