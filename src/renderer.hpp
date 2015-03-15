@@ -5,6 +5,7 @@
 #include "level.hpp"
 
 #include <curses.h>
+#include <cmath>
 
 class Renderer {
     char** _screen;
@@ -20,6 +21,7 @@ public:
     int GetKey();
     void Write(std::string msg, int x, int y);
     void DisplayStats(Character player);
+    void FOV(Level& level, uint x, uint y, uint radius);
 };
 
 #endif

@@ -29,7 +29,8 @@ Renderer::~Renderer() {
 void Renderer::UpdateMap(Level& level) {
     for(int y = 0; y < level.H(); y++) {
         for(int x = 0; x < level.W(); x++) {
-            UpdateMap(level.Map()[y][x].type, x, y);
+            if(level.Map()[y][x].visible) UpdateMap(level.Map()[y][x].type, x, y);
+            else UpdateMap(255, x, y);
         }
     }
 }
@@ -221,4 +222,63 @@ void Renderer::DisplayStats(Character player) {
     line += std::to_string(player.Xp());
     
     mvaddstr(22, 0, line.c_str());
+}
+
+void cast_light(Level& level, uint x, uint y, uint radius, uint row, float start_slope, float end_slope, uint xx, uint xy, uint yx, uint yy) {
+    if(start_slope < end_slope) return;
+    float next_start_slope = start_slope;
+
+    for(uint i = row; i <= radius; i++) {
+        bool blocked = false;
+
+        for(int dx = -i, dy = -i; dx <= 0; dx++) {
+            float l_slope = (dx - 0.5) / (dy + 0.5);
+            float r_slope = (dx + 0.5) / (dy - 0.5);
+
+            if(start_slope < r_slope) continue;
+            else if(end_slope > l_slope) break;
+
+            int sax = dx * xx + dy * xy;
+            int say = dx * yx + dy * yy;
+            if((sax < 0 && (uint)std::abs(sax) > x) || (say < 0 && (uint)std::abs(say) > y)) continue;
+
+            uint ax = x + sax;
+            uint ay = y + say;
+            if(ax >= level.W() || ay >= level.H()) continue;
+
+            uint radius2 = radius * radius;
+            if((uint)(dx * dx + dy * dy) < radius2) level.SetVis(ax, ay, true);
+
+            if(blocked) {
+                if(level.Map()[ay][ax].opaque) {
+                    next_start_slope = r_slope;
+                    continue;
+                }
+                else {
+                    blocked = false;
+                    start_slope = next_start_slope;
+                }
+            }
+            else if(level.Map()[y][x].opaque) {
+                blocked = true;
+                next_start_slope = r_slope;
+                cast_light(level, x, y, radius, i+1, start_slope, l_slope, xx, xy, yx, yy);
+            }
+        }
+
+        if(blocked) break;
+    }
+}
+
+static int multipliers[4][8] = {
+    { 1, 0, 0,-1,-1, 0, 0, 1},
+    { 0, 1,-1, 0, 0,-1, 1, 0},
+    { 0, 1, 1, 0, 0,-1,-1, 0},
+    { 1, 0, 0, 1,-1, 0, 0,-1}
+};
+
+void Renderer::FOV(Level& level, uint x, uint y, uint radius) {
+    for(uint i = 0; i < 8; i++) {
+        cast_light(level, x, y, radius, 1, 1.0, 0.0, multipliers[0][i], multipliers[1][i], multipliers[2][i], multipliers[3][i]);
+    }
 }

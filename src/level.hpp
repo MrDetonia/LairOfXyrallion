@@ -11,6 +11,7 @@
 struct Tile {
     char type;
     bool passable;
+    bool opaque;
     bool visible;
 };
 
@@ -22,14 +23,15 @@ enum MapTiles {
 };
 
 const Tile tiles[] = {
-    {MAP_FLOOR, true, false},
-    {MAP_WALL, false, false},
-    {MAP_STAIR_UP, true, false},
-    {MAP_STAIR_DOWN, true, false}
+    {MAP_FLOOR, true, false, false},
+    {MAP_WALL, false, true, false},
+    {MAP_STAIR_UP, true, false, false},
+    {MAP_STAIR_DOWN, true, false, false}
 };
 
 class Level {
     Tile** _map;
+    std::vector<Vector2D> _visible;
     Vector2D _stairDown, _stairUp;
     std::vector<Creature*> _creatures;
     std::vector<Item*> _items;
@@ -92,6 +94,8 @@ public:
     Vector2D StairUp() const {return _stairUp;};
     char W() const {return _w;};
     char H() const {return _h;};
+    void ClearVis();
+    void SetVis(uint x, uint y, bool visible) {_map[y][x].visible = visible;};
 };
 
 #endif

@@ -7,9 +7,12 @@
 #include <string>
 #include <random>
 
+typedef unsigned char uchar;
+typedef unsigned int uint;
+
 struct Vector2D {
-    int x;
-    int y;
+    uint x;
+    uint y;
     
     bool operator==(const Vector2D& vect) {
         if(x == vect.x && y == vect.y) return true;
