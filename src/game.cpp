@@ -31,7 +31,10 @@ int Game::Execute() {
 
             case '>':
                 if(_player.Pos() == _dungeon[level].StairDown()) {
-                    if(_dungeon.size() == ++level) _dungeon.push_back(_dungeon[level - 1]);
+                    if(_dungeon.size() == ++level) {
+                        Level tmp(80, 21);
+                        _dungeon.push_back(tmp);
+                    }
                     _player.Pos(_dungeon[level].StairUp());
                 }
                 break;

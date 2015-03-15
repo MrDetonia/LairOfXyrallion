@@ -64,6 +64,8 @@ public:
         // copy old variables
         _w = o._w;
         _h = o._h;
+        _stairDown = o._stairDown;
+        _stairUp = o._stairUp;
         _fillprob = o._fillprob;
         _r1_cutoff = o._r1_cutoff;
         _r2_cutoff = o._r2_cutoff;
@@ -73,10 +75,8 @@ public:
         _map = new Tile* [_h];
         for(int i = 0; i < _h; i++) {
             _map[i] = new Tile [_w];
+            memcpy(_map[i], o._map[i], _w * sizeof(Tile));
         }
-
-        // generate level
-        this->Generate();
     }
 
     ~Level() {
