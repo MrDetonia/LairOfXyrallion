@@ -1,0 +1,14 @@
+Lair of Xyrallion TODO List:
+----------------------------
+
+Create item generation system
+Add random items to dungeons
+Create creature generation system
+Add random creatures to dungeons
+Create FOV algorithm
+Create creature AI
+Create menu system
+Add character creation menu
+Create inventory system
+Create combat system
+Create spell system
