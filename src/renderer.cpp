@@ -259,7 +259,7 @@ void cast_light(Level& level, uint x, uint y, uint radius, uint row, float start
                     start_slope = next_start_slope;
                 }
             }
-            else if(level.Map()[y][x].opaque) {
+            else if(level.Map()[ay][ax].opaque) {
                 blocked = true;
                 next_start_slope = r_slope;
                 cast_light(level, x, y, radius, i+1, start_slope, l_slope, xx, xy, yx, yy);

@@ -18,7 +18,7 @@ int Game::Execute() {
     bool running = true;
     while(running) {
         _dungeon[level].ClearVis();
-        _renderer.FOV(_dungeon[level], _player.Pos().x, _player.Pos().y, 5);
+        _renderer.FOV(_dungeon[level], _player.Pos().x, _player.Pos().y, 10);
         _renderer.UpdateMap(_dungeon[level]);
         _renderer.DisplayStats(_player);
         std::string msg = "DLvl: " + std::to_string(level + 1) + "  ";
