@@ -3,6 +3,7 @@
 
 #include "level.hpp"
 #include "renderer.hpp"
+#include "character.hpp"
 
 class Game {
     std::vector<Level> _dungeon;

@@ -1,4 +1,5 @@
 #include "level.hpp"
+#include "character.hpp"
 
 int Level::randpick() {
     if(rand()%100 < _fillprob) return MAP_WALL;
@@ -152,12 +153,4 @@ void Level::Generate() {
     }
     delete [] new_map;
     delete [] flooded_map;
-}
-
-void Level::ClearVis() {
-    for(int y = 0; y < _h; y++) {
-        for(int x = 0; x < _w; x++) {
-            _map[y][x].visible = false;
-        }
-    }
 }

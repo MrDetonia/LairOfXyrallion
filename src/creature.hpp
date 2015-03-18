@@ -3,6 +3,8 @@
 
 #include "common.hpp"
 
+class Level;
+
 enum CreatureTypes {
     CREATURE_CHARACTER,
     CREATURE_BUGBEAR,
@@ -30,41 +32,46 @@ enum CreatureTypes {
 
 class Creature {
     char _type;
-    unsigned char _hp;
-    unsigned char _max_hp;
-    unsigned char _mp;
-    unsigned char _max_mp;
-    unsigned int _xp;
+    uint _hp;
+    uint _max_hp;
+    uint _mp;
+    uint _max_mp;
+    uint _xp;
     Vector2D _pos;
+    std::vector<Vector2D> _vis;
 
-    unsigned char _str;
-    unsigned char _dex;
-    unsigned char _spd;
-    unsigned char _end;
-    unsigned char _int;
-    unsigned char _wis;
-    unsigned char _cha;
+    uint _str;
+    uint _dex;
+    uint _spd;
+    uint _end;
+    uint _int;
+    uint _wis;
+    uint _cha;
+
+    void shadowcast(Level& level, uint x, uint y, uint radius, uint row, float start_slope, float end_slope, uint xx, uint xy, uint yx, uint yy);
 
 public:
     Creature(char type);
     
     void AddPos(int x, int y) {_pos.x += x; _pos.y += y;};
     void Pos(Vector2D pos) {_pos = pos;};
+    std::vector<Vector2D> Vis() const {return _vis;};
+    void FOV(Level& level);
     
     char Type() const {return _type;};
-    unsigned char Hp() const {return _hp;};
-    unsigned char MaxHp() const {return _max_hp;};
-    unsigned char Mp() const {return _mp;};
-    unsigned char MaxMp() const {return _max_mp;};
-    unsigned char Xp() const {return _xp;};
+    uint Hp() const {return _hp;};
+    uint MaxHp() const {return _max_hp;};
+    uint Mp() const {return _mp;};
+    uint MaxMp() const {return _max_mp;};
+    uint Xp() const {return _xp;};
     Vector2D Pos() const {return _pos;};
-    unsigned char Str() const {return _str;};
-    unsigned char Dex() const {return _dex;};
-    unsigned char Spd() const {return _spd;};
-    unsigned char End() const {return _end;};
-    unsigned char Int() const {return _int;};
-    unsigned char Wis() const {return _wis;};
-    unsigned char Cha() const {return _cha;};
+    uint Str() const {return _str;};
+    uint Dex() const {return _dex;};
+    uint Spd() const {return _spd;};
+    uint End() const {return _end;};
+    uint Int() const {return _int;};
+    uint Wis() const {return _wis;};
+    uint Cha() const {return _cha;};
 };
 
 #endif

@@ -4,8 +4,11 @@
 #include <cstdio>
 #include <cstdlib>
 #include <cstring>
+#include <cmath>
 #include <string>
 #include <random>
+#include <vector>
+#include <list>
 
 typedef unsigned char uchar;
 typedef unsigned int uint;
