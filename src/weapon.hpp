@@ -2,13 +2,10 @@
 #define _LoX_WEAPON
 
 enum WeaponTypes {
-    WEAPON_DAGGER,
-    WEAPON_SWORD,
-    WEAPON_AXE,
-    WEAPON_MACE,
-    WEAPON_BOW,
-    WEAPON_CROSSBOW,
-    WEAPON_STAFF
+    WEAPON_SLASHING,
+    WEAPON_PIERCING,
+    WEAPON_BLUDGEONING,
+    WEAPON_RANGED
 };
 
 class Item_Weapon : public Item {

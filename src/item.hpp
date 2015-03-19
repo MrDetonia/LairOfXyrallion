@@ -1,16 +1,16 @@
 #ifndef _LoX_ITEM
 #define _LoX_ITEM
 
+#include "common.h"
+
 enum ItemCategories {
-    ITEM_GOLD,
     ITEM_ARMOUR,
     ITEM_WEAPON,
     ITEM_AMMO,
     ITEM_POTION,
     ITEM_SCROLL,
     ITEM_WAND,
-    ITEM_FOOD,
-    ITEM_JEWELLERY
+    ITEM_FOOD
 };
 
 enum ItemTypes {
@@ -22,16 +22,16 @@ enum ItemTypes {
 };
 
 class Item {
-    char _category;
-    char _type;
-    char _weight;
-    int _value;
+    std::string _name;
+    uint _category;
+    uint _type;
+    uint _weight;
 
 public:
-    char Category() const {return _category;};
-    virtual char Subcat() const {return 255;};
-    char Type() const {return _type;};
-    char Weight() const {return _weight;};
+    uint Category() const {return _category;};
+    virtual uint Subcat() const {return 255;};
+    uint Type() const {return _type;};
+    uint Weight() const {return _weight;};
     int Value() const {return _value;};
 };
 
