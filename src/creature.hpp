@@ -52,12 +52,12 @@ class Creature {
 
 public:
     Creature(char type);
-    
+
     void AddPos(int x, int y) {_pos.x += x; _pos.y += y;};
     void Pos(Vector2D pos) {_pos = pos;};
     std::vector<Vector2D> Vis() const {return _vis;};
     void FOV(Level& level);
-    
+
     char Type() const {return _type;};
     uint Hp() const {return _hp;};
     uint MaxHp() const {return _max_hp;};

@@ -8,7 +8,7 @@
 class Game {
     std::vector<Level> _dungeon;
     Character _player;
-    std::vector<Item*> _inventory;
+    //std::vector<Item*> _inventory;
     Renderer _renderer;
 
 public:

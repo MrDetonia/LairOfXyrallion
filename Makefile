@@ -6,7 +6,7 @@
 CC = g++
 
 # Compiler flags
-CFLAGS = -g -std=c++11
+CFLAGS = -g -std=c++11 -Wall -Wextra -Wpedantic -Werror
 
 # Linker flags
 LFLAGS = -lcurses
@@ -61,5 +61,5 @@ uninstall:
 
 # clean build directories
 .PHONY: clean
-clean: 
+clean:
 	rm -fr $(OBJDIR)/*o $(BUILDDIR)/$(TARGET)
