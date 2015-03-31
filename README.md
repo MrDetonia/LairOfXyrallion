@@ -14,6 +14,15 @@ The kingdom of Aarim is a peaceful one. It is a kingdom ruled by the grand Empre
 But a shadow has been cast over the land, and dark forces gather and grow, quietly out of sight. For the great and terrible Dragon 'Xyrallion' has awoken from his ancient slumber in the caverns below Aarim, and seeks to destroy the mortal races that have chosen to dwell in his kingdom during his absence.  
 Now, Empress Tir'Alerwyn calls for a champion; one who shall rise against the coming darkness; one who will delve into the Lair of Xyrallion, and silence the beast for good.
 
+## Controls
+4/h - Move left  
+6/l - Move right  
+8/k - Move up  
+2/j - Move down  
+\>  - Stair down  
+<   - Stair up  
+q   - Quit
+
 ## Building
 ### Requirements
 To build the game, you will require a curses library. If you are unsure as to where to get one; Linux users should try [ncurses](https://www.gnu.org/software/ncurses/), wheras Windows users should instead try [PDCurses](http://pdcurses.sourceforge.net/).
