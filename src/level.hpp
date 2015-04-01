@@ -78,7 +78,13 @@ public:
         _map = new Tile* [_h];
         for(uint i = 0; i < _h; i++) {
             _map[i] = new Tile [_w];
-            memcpy(_map[i], o._map[i], _w * sizeof(Tile));
+            for(uint j = 0; j < _w; j++) {
+                _map[i][j].items = o._map[i][j].items;
+                _map[i][j].type = o._map[i][j].type;
+                _map[i][j].passable = o._map[i][j].passable;
+                _map[i][j].opaque = o._map[i][j].opaque;
+            }
+            //memcpy(_map[i], o._map[i], _w * sizeof(Tile));
         }
     }
 

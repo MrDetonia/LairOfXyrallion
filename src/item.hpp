@@ -35,6 +35,8 @@ public:
         _weight(weight)
     {}
 
+    virtual ~Item() {}
+
     uint Category() const {return _category;}
     uint Type() const {return _type;}
     uint Weight() const {return _weight;}
