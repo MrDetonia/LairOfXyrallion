@@ -10,6 +10,8 @@
 #include <vector>
 #include <list>
 
+#include "dieroll.hpp"
+
 typedef unsigned char uchar;
 typedef unsigned int uint;
 

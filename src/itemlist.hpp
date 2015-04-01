@@ -3,31 +3,9 @@
 
 #include "common.hpp"
 
-struct ArmourTemplate {
-    uint type;
-    uint limb;
-    std::string name;
-    uint weight;
-    uint AC;
-};
-
-struct WeponTemplate {
-    uint type;
-    uint style;
-    std::string name;
-    uint weight;
-    die dmg;
-    uint crit;
-};
-
-struct RangedTemplate {
-    uint type;
-    std::string name;
-    uint weight;
-    die dmg;
-    uint crit;
-    uint range;
-};
+#include "armour.hpp"
+#include "weapon.hpp"
+#include "ranged.hpp"
 
 const ArmourTemplate armourTemplates[] = {
     /* ARMOUR_HELMET */
@@ -111,7 +89,7 @@ const WeaponTemplate weaponTemplates[] = {
     {ITEMTYPE_MAGIC, WEAPON_PIERCING, "Elven Pick", 6, {1,6,6}, 4},
     {ITEMTYPE_MAGIC, WEAPON_PIERCING, "Elven Rapier", 2, {1,6,6}, 2},
     {ITEMTYPE_EPIC, WEAPON_PIERCING, "Draconian Spear", 6, {1,8,10}, 4},
-    {ITEMTYPE_EPIC WEAPON_PIERCING, "Draconian Pick", 9, {1,6,10}, 5},
+    {ITEMTYPE_EPIC, WEAPON_PIERCING, "Draconian Pick", 9, {1,6,10}, 5},
     {ITEMTYPE_EPIC, WEAPON_PIERCING, "Draconian Rapier", 5, {1,6,10}, 3},
 
     /* WEAPON_BLUDGEONING */
@@ -133,15 +111,15 @@ const WeaponTemplate weaponTemplates[] = {
 };
 
 const RangedTemplate rangedTemplates[] = {
-    {ITEMTYPE_MUNDANE, WEAPON_RANGED, "Crossbow", 4, {1,8,0}, 2, 8},
-    {ITEMTYPE_MUNDANE, WEAPON_RANGED, "Shortbow", 2, {1,6,0}, 3, 6},
-    {ITEMTYPE_MUNDANE, WEAPON_RANGED, "Longbow", 3, {1,8,0}, 3, 10},
-    {ITEMTYPE_MAGIC, WEAPON_RANGED, "Elven Crossbow", 3, {1,8,3}, 2, 8},
-    {ITEMTYPE_MAGIC, WEAPON_RANGED, "Elven Shortbow", 1, {1,6,3}, 3, 6},
-    {ITEMTYPE_MAGIC, WEAPON_RANGED, "Elven Longbow", 2, {1,8,3}, 3, 10},
-    {ITEMTYPE_EPIC, WEAPON_RANGED, "Draconian Crossbow", 6, {1,8,8}, 3, 8},
-    {ITEMTYPE_EPIC, WEAPON_RANGED, "Draconian Shortbow", 4, {1,6,8}, 4, 6},
-    {ITEMTYPE_EPIC, WEAPON_RANGED, "Draconian Longbow", 5, {1,8,8}, 4, 10},
+    {ITEMTYPE_MUNDANE, "Crossbow", 4, {1,8,0}, 2, 8},
+    {ITEMTYPE_MUNDANE, "Shortbow", 2, {1,6,0}, 3, 6},
+    {ITEMTYPE_MUNDANE, "Longbow", 3, {1,8,0}, 3, 10},
+    {ITEMTYPE_MAGIC, "Elven Crossbow", 3, {1,8,3}, 2, 8},
+    {ITEMTYPE_MAGIC, "Elven Shortbow", 1, {1,6,3}, 3, 6},
+    {ITEMTYPE_MAGIC, "Elven Longbow", 2, {1,8,3}, 3, 10},
+    {ITEMTYPE_EPIC, "Draconian Crossbow", 6, {1,8,8}, 3, 8},
+    {ITEMTYPE_EPIC, "Draconian Shortbow", 4, {1,6,8}, 4, 6},
+    {ITEMTYPE_EPIC, "Draconian Longbow", 5, {1,8,8}, 4, 10},
 };
 
 #endif

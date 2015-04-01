@@ -1,7 +1,11 @@
 #ifndef _LoX_ITEM
 #define _LoX_ITEM
 
-#include "common.h"
+#include "common.hpp"
+
+class Armour;
+class Weapon;
+class Ranged;
 
 enum ItemCategories {
     ITEM_ARMOUR,
@@ -29,11 +33,13 @@ public:
         _category(category),
         _type(type),
         _weight(weight)
-    {};
+    {}
 
-    uint Category() const {return _category;};
-    uint Type() const {return _type;};
-    uint Weight() const {return _weight;};
+    uint Category() const {return _category;}
+    uint Type() const {return _type;}
+    uint Weight() const {return _weight;}
+
+    static Item* Generate();
 };
 
 #endif

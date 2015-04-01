@@ -3,7 +3,17 @@
 
 #include "common.hpp"
 
-struct Die {uint num; uint val; int mod;};
+struct Die {
+    uint num;
+    uint val;
+    int mod;
+
+    void Set(uint num, uint val, int mod) {
+        this->num = num;
+        this->val = val;
+        this->mod = mod;
+    }
+};
 
 class DieRoll {
     static std::random_device seed_gen;

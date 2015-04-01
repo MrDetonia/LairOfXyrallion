@@ -153,4 +153,14 @@ void Level::Generate() {
     }
     delete [] new_map;
     delete [] flooded_map;
+
+    // scatter items around level
+    for(uint i = 0; i < 100; i++) {
+        Die tmp = {1, _h-1, 0};
+        uint y = DieRoll::Roll(tmp);
+        tmp.Set(1, _w-1, 0);
+        uint x = DieRoll::Roll(tmp);
+
+        if(_map[y][x].type == MAP_FLOOR) _map[y][x].items.push_back(Item::Generate());
+    }
 }

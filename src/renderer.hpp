@@ -17,7 +17,7 @@ public:
     void ClearMap(Level& level);
     void UpdateMap(Level& level);
     void UpdateMap(Level& level, std::vector<Vector2D> vis);
-    void UpdateMap(char tile, int x, int y);
+    void DrawTile(Tile& tile, int x, int y);
     void DrawCreature(Creature creature);
     void DrawCharacter(Character character);
     int GetKey();

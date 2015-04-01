@@ -3,6 +3,8 @@
 
 #include "common.hpp"
 
+#include "item.hpp"
+
 #include <ctime>
 #include <vector>
 
@@ -10,6 +12,7 @@ class Creature;
 class Character;
 
 struct Tile {
+    std::vector<Item*> items;
     char type;
     bool passable;
     bool opaque;
@@ -23,17 +26,16 @@ enum MapTiles {
 };
 
 const Tile tiles[] = {
-    {MAP_FLOOR, true, false},
-    {MAP_WALL, false, true},
-    {MAP_STAIR_UP, true, false},
-    {MAP_STAIR_DOWN, true, false}
+    {{}, MAP_FLOOR, true, false},
+    {{}, MAP_WALL, false, true},
+    {{}, MAP_STAIR_UP, true, false},
+    {{}, MAP_STAIR_DOWN, true, false}
 };
 
 class Level {
     Tile** _map;
     Vector2D _stairDown, _stairUp;
     std::vector<Creature*> _creatures;
-    //std::vector<Item*> _items;
     uint _w;
     uint _h;
     int _fillprob;
@@ -88,11 +90,11 @@ public:
     }
 
     void Generate();
-    Tile** Map() const {return _map;};
-    Vector2D StairDown() const {return _stairDown;};
-    Vector2D StairUp() const {return _stairUp;};
-    uint W() const {return _w;};
-    uint H() const {return _h;};
+    Tile** Map() const {return _map;}
+    Vector2D StairDown() const {return _stairDown;}
+    Vector2D StairUp() const {return _stairUp;}
+    uint W() const {return _w;}
+    uint H() const {return _h;}
 };
 
 #endif

@@ -29,7 +29,7 @@ Renderer::~Renderer() {
 void Renderer::ClearMap(Level& level) {
     for(uint y = 0; y < level.H(); y++) {
         for(uint x = 0; x < level.W(); x++) {
-            UpdateMap(-127, x, y);
+            mvaddch(y, x, ' ');
         }
     }
 }
@@ -37,19 +37,19 @@ void Renderer::ClearMap(Level& level) {
 void Renderer::UpdateMap(Level& level) {
     for(uint y = 0; y < level.H(); y++) {
         for(uint x = 0; x < level.W(); x++) {
-            UpdateMap(level.Map()[y][x].type, x, y);
+            DrawTile(level.Map()[y][x], x, y);
         }
     }
 }
 
 void Renderer::UpdateMap(Level& level, std::vector<Vector2D> vis) {
-    for(Vector2D &pos: vis) UpdateMap(level.Map()[pos.y][pos.x].type, pos.x, pos.y);
+    for(Vector2D &pos: vis) DrawTile(level.Map()[pos.y][pos.x], pos.x, pos.y);
 }
 
-void Renderer::UpdateMap(char tile, int x, int y) {
+void Renderer::DrawTile(Tile& tile, int x, int y) {
     char symbol;
 
-    switch(tile) {
+    switch(tile.type) {
         case MAP_FLOOR:
             symbol = '.';
             break;
@@ -67,12 +67,33 @@ void Renderer::UpdateMap(char tile, int x, int y) {
             break;
 
         default:
-        case -127:
             symbol = ' ';
             break;
     }
 
     mvaddch(y, x, symbol);
+
+    if(!tile.items.empty()) {
+        switch(tile.items[0]->Category()) {
+            case ITEM_ARMOUR:
+                symbol = '[';
+                break;
+
+            case ITEM_WEAPON:
+                symbol = '(';
+                break;
+
+            case ITEM_RANGED:
+                symbol = '{';
+                break;
+
+            default:
+                symbol = ',';
+                break;
+        }
+
+        mvaddch(y, x, symbol);
+    }
 }
 
 void Renderer::DrawCreature(Creature creature) {
