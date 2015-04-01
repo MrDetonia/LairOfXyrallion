@@ -13,7 +13,7 @@ struct ArmourTemplate {
 
 struct WeponTemplate {
     uint type;
-    uint cat;
+    uint style;
     std::string name;
     uint weight;
     die dmg;

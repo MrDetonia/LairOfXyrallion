@@ -6,11 +6,7 @@
 enum ItemCategories {
     ITEM_ARMOUR,
     ITEM_WEAPON,
-    ITEM_AMMO,
-    ITEM_POTION,
-    ITEM_SCROLL,
-    ITEM_WAND,
-    ITEM_FOOD
+    ITEM_RANGED
 };
 
 enum ItemTypes {
@@ -28,11 +24,16 @@ class Item {
     uint _weight;
 
 public:
+    Item(std::string name, uint category, uint type, uint weight) :
+        _name(name),
+        _category(category),
+        _type(type),
+        _weight(weight)
+    {};
+
     uint Category() const {return _category;};
-    virtual uint Subcat() const {return 255;};
     uint Type() const {return _type;};
     uint Weight() const {return _weight;};
-    int Value() const {return _value;};
 };
 
 #endif

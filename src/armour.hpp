@@ -1,22 +1,21 @@
 #ifndef _LoX_ARMOUR
 #define _LoX_ARMOUR
 
-enum ArmorTypes {
-    ARMOUR_HELMET,
-    ARMOUR_TORSO,
-    ARMOUR_LEGS,
-    ARMOUR_HANDS,
-    ARMOUR_FEET,
-    ARMOUR_SHIELD
-};
+#include "item.hpp"
 
-class Item_Armour : public Item {
-    char _subcat;
-    DieRoll _ac;
+class Armour : public Item {
+    uint _limb;
+    uint _AC;
 
 public:
-    char Subcat() const {return _subcat;};
-    char AC() const {return _ac.Roll();};
+    Armour(ArmourTemplate at) :
+        Item(at.name, ITEM_ARMOUR, at.type, at.weight),
+        _limb(at.limb),
+        _AC(at.AC)
+    {};
+
+    uint Limb() const {return _limb;};
+    uint AC() const {return _AC;};
 };
 
 #endif

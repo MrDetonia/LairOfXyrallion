@@ -1,22 +1,24 @@
 #ifndef _LoX_WEAPON
 #define _LoX_WEAPON
 
-enum WeaponTypes {
-    WEAPON_SLASHING,
-    WEAPON_PIERCING,
-    WEAPON_BLUDGEONING,
-    WEAPON_RANGED
-};
+#include "item.hpp"
 
-class Item_Weapon : public Item {
-    char _subcat;
-    DieRoll _damage;
-    DieRoll _toHit;
+class Weapon : public Item{
+    uint _style;
+    die _dmg;
+    uint _crit;
 
 public:
-    char Subcat() {return _subcat;};
-    int Damage() {return _damage.Roll();};
-    int ToHit() {return _toHit.Roll();};
+    Weapon(WeaponTemplate wt) :
+        Item(wt.name, ITEM_WEAPON, wt.type, wt.weight),
+        _style(wt.style),
+        _dmg(wt.dmg),
+        _crit(wt.crit)
+    {};
+
+    uint Style() const {return _style;};
+    die Dmg() const {return _dmg;};
+    uint Crit() const {return _crit;};
 };
 
 #endif
