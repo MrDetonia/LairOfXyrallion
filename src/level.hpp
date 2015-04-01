@@ -2,7 +2,6 @@
 #define _LoX_LEVEL
 
 #include "common.hpp"
-#include "item.hpp"
 
 #include <ctime>
 #include <vector>
@@ -34,9 +33,9 @@ class Level {
     Tile** _map;
     Vector2D _stairDown, _stairUp;
     std::vector<Creature*> _creatures;
-    std::vector<Item*> _items;
-    char _w;
-    char _h;
+    //std::vector<Item*> _items;
+    uint _w;
+    uint _h;
     int _fillprob;
     int _r1_cutoff, _r2_cutoff;
     int _passes;
@@ -44,7 +43,7 @@ class Level {
     int randpick();
 
 public:
-    Level(char w = 80, char h = 24, int fillprob = 40, int r1_cutoff = 5, int r2_cutoff = 0, int passes = 12) :
+    Level(uint w = 80, uint h = 24, int fillprob = 40, int r1_cutoff = 5, int r2_cutoff = 0, int passes = 12) :
         _w(w),
         _h(h),
         _fillprob(fillprob),
@@ -54,7 +53,7 @@ public:
     {
         // allocate memory for map
         _map = new Tile* [_h];
-        for(int i = 0; i < _h; i++) {
+        for(uint i = 0; i < _h; i++) {
             _map[i] = new Tile [_w];
         }
 
@@ -75,14 +74,14 @@ public:
 
         // allocate memory for new map
         _map = new Tile* [_h];
-        for(int i = 0; i < _h; i++) {
+        for(uint i = 0; i < _h; i++) {
             _map[i] = new Tile [_w];
             memcpy(_map[i], o._map[i], _w * sizeof(Tile));
         }
     }
 
     ~Level() {
-        for(int i = 0; i < _h; i++) {
+        for(uint i = 0; i < _h; i++) {
             delete [] _map[i];
         }
         delete [] _map;
@@ -92,8 +91,8 @@ public:
     Tile** Map() const {return _map;};
     Vector2D StairDown() const {return _stairDown;};
     Vector2D StairUp() const {return _stairUp;};
-    char W() const {return _w;};
-    char H() const {return _h;};
+    uint W() const {return _w;};
+    uint H() const {return _h;};
 };
 
 #endif

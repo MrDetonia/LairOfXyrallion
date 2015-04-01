@@ -35,8 +35,8 @@ void Renderer::ClearMap(Level& level) {
 }
 
 void Renderer::UpdateMap(Level& level) {
-    for(int y = 0; y < level.H(); y++) {
-        for(int x = 0; x < level.W(); x++) {
+    for(uint y = 0; y < level.H(); y++) {
+        for(uint x = 0; x < level.W(); x++) {
             UpdateMap(level.Map()[y][x].type, x, y);
         }
     }
@@ -77,24 +77,24 @@ void Renderer::UpdateMap(char tile, int x, int y) {
 
 void Renderer::DrawCreature(Creature creature) {
     char symbol;
-    
+
     switch(creature.Type()) {
         case CREATURE_CHARACTER:
         break;
     }
-    
+
     mvaddch(creature.Pos().y, creature.Pos().x, symbol);
 }
 
 void Renderer::DrawCharacter(Character character) {
     char symbol;
-    
+
     switch(character.Race()) {
         case RACE_HUMAN:
             symbol = '@';
             break;
     }
-    
+
     mvaddch(character.Pos().y, character.Pos().x, symbol);
 }
 
@@ -114,114 +114,114 @@ void Renderer::DisplayStats(Character player) {
         case RACE_HUMAN:
             line += "Human";
             break;
-        
+
         case RACE_ELF:
             line += "Elven";
             break;
-        
+
         case RACE_DWARF:
             line += "Dwarven";
             break;
-        
+
         case RACE_HALFLING:
             line += "Halfling";
             break;
-        
+
         case RACE_GNOME:
             line += "Gnome";
             break;
-        
+
         case RACE_HALF_ORC:
             line += "Half-Orc";
             break;
-        
+
         case RACE_DROMITE:
             line += "Dromite";
             break;
-        
+
         case RACE_DUERGAR:
             line += "Duergar";
             break;
-        
+
         case RACE_ELAN:
             line += "Elan";
             break;
-        
+
         case RACE_HALF_GIANT:
             line += "Half-Giant";
             break;
-        
+
         case RACE_MAENAD:
             line += "Maenad";
             break;
-        
+
         case RACE_XEPH:
             line += "Xeph";
             break;
     }
-    
+
     switch(player.Class()) {
         case CLASS_BARBARIAN:
             line += " Barbarian";
             break;
-        
+
         case CLASS_BARD:
             line += " Bard";
             break;
-        
+
         case CLASS_CLERIC:
             line += " Cleric";
             break;
-        
+
         case CLASS_DRUID:
             line += " Druid";
             break;
-        
+
         case CLASS_FIGHTER:
             line += " Fighter";
             break;
-        
+
         case CLASS_MONK:
             line += " Monk";
             break;
-        
+
         case CLASS_PALADIN:
             line += " Paladin";
             break;
-        
+
         case CLASS_PSION:
             line += " Psion";
             break;
-        
+
         case CLASS_PSYCHIC_WARRIOR:
             line += " Psychic Warrior";
             break;
-        
+
         case CLASS_RANGER:
             line += " Ranger";
             break;
-        
+
         case CLASS_ROGUE:
             line += " Rogue";
             break;
-        
+
         case CLASS_SORCEROR:
             line += " Sorceror";
             break;
-        
+
         case CLASS_SOULKNIFE:
             line += " Soulknife";
             break;
-        
+
         case CLASS_WILDER:
             line += " Wilder";
             break;
-        
+
         case CLASS_WIZARD:
             line += " Wizard";
             break;
     }
-    
+
     line += " HP:";
     line += std::to_string(player.Hp());
     line += "/";
@@ -232,6 +232,6 @@ void Renderer::DisplayStats(Character player) {
     line += std::to_string(player.MaxMp());
     line += " XP:";
     line += std::to_string(player.Xp());
-    
+
     mvaddstr(22, 0, line.c_str());
 }

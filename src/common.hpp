@@ -16,7 +16,7 @@ typedef unsigned int uint;
 struct Vector2D {
     uint x;
     uint y;
-    
+
     bool operator==(const Vector2D& vect) {
         if(x == vect.x && y == vect.y) return true;
         return false;

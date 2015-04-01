@@ -12,7 +12,7 @@ Game::~Game() {
 }
 
 int Game::Execute() {
-    int level = 0;
+    uint level = 0;
     _player.Pos(_dungeon[level].StairUp());
 
     bool running = true;
@@ -43,46 +43,47 @@ int Game::Execute() {
 
             case '<':
                 if(_player.Pos() == _dungeon[level].StairUp()) {
-                    if(--level < 0) running = false;
+                    if(level == 0) running = false;
+                    else level--;
                     _player.Pos(_dungeon[level].StairDown());
                 }
                 break;
-            
+
             case 'k':
             case '8':
                 if(_dungeon[level].Map()[_player.Pos().y-1][_player.Pos().x].passable) _player.AddPos(0,-1);
                 break;
-            
+
             case 'j':
             case '2':
                 if(_dungeon[level].Map()[_player.Pos().y+1][_player.Pos().x].passable) _player.AddPos(0,1);
                 break;
-            
+
             case 'h':
             case '4':
                 if(_dungeon[level].Map()[_player.Pos().y][_player.Pos().x-1].passable) _player.AddPos(-1,0);
                 break;
-            
+
             case 'l':
             case '6':
                 if(_dungeon[level].Map()[_player.Pos().y][_player.Pos().x+1].passable) _player.AddPos(1,0);
                 break;
-            
+
             case 'u':
             case '7':
                 if(_dungeon[level].Map()[_player.Pos().y-1][_player.Pos().x-1].passable) _player.AddPos(-1,-1);
                 break;
-            
+
             case 'i':
             case '9':
                 if(_dungeon[level].Map()[_player.Pos().y-1][_player.Pos().x+1].passable) _player.AddPos(1,-1);
                 break;
-            
+
             case 'n':
             case '1':
                 if(_dungeon[level].Map()[_player.Pos().y+1][_player.Pos().x-1].passable) _player.AddPos(-1,1);
                 break;
-            
+
             case 'm':
             case '3':
                 if(_dungeon[level].Map()[_player.Pos().y+1][_player.Pos().x+1].passable) _player.AddPos(1,1);
