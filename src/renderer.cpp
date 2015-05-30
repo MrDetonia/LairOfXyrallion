@@ -127,6 +127,12 @@ void Renderer::Write(std::string msg, int x, int y) {
     mvaddstr(y, x, msg.c_str());
 }
 
+void Renderer::Message(std::string msg) {
+    move(24,0);
+    clrtoeol();
+    mvaddstr(24,0,msg.c_str());
+}
+
 void Renderer::DisplayStats(Character player) {
     std::string line = player.Name();
     line += " the ";

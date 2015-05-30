@@ -12,7 +12,7 @@ class Creature;
 class Character;
 
 struct Tile {
-    std::vector<Item*> items;
+    std::vector<item_ptr> items;
     char type;
     bool passable;
     bool opaque;
@@ -35,7 +35,7 @@ const Tile tiles[] = {
 class Level {
     Tile** _map;
     Vector2D _stairDown, _stairUp;
-    std::vector<Creature*> _creatures;
+    std::vector<Creature> _creatures;
     uint _w;
     uint _h;
     int _fillprob;
@@ -101,6 +101,10 @@ public:
     Vector2D StairUp() const {return _stairUp;}
     uint W() const {return _w;}
     uint H() const {return _h;}
+    bool HasItem(Vector2D pos) const;
+    item_ptr SeeItem(Vector2D pos) const;
+    item_ptr GetItem(Vector2D pos);
+    void PutItem(Vector2D pos, item_ptr item);
 };
 
 #endif

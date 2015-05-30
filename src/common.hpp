@@ -5,6 +5,7 @@
 #include <cstdlib>
 #include <cstring>
 #include <cmath>
+#include <memory>
 #include <string>
 #include <random>
 #include <vector>

@@ -22,6 +22,7 @@ public:
     void DrawCharacter(Character character);
     int GetKey();
     void Write(std::string msg, int x, int y);
+    void Message(std::string msg);
     void DisplayStats(Character player);
     void FOV(Level& level, uint x, uint y, uint radius);
 };

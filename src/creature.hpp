@@ -65,6 +65,8 @@ public:
     uint MaxMp() const {return _max_mp;};
     uint Xp() const {return _xp;};
     Vector2D Pos() const {return _pos;};
+    uint X() const {return _pos.x;};
+    uint Y() const {return _pos.y;};
     uint Str() const {return _str;};
     uint Dex() const {return _dex;};
     uint Spd() const {return _spd;};

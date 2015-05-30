@@ -155,7 +155,7 @@ void Level::Generate() {
     delete [] flooded_map;
 
     // scatter items around level
-    for(uint i = 0; i < 100; i++) {
+    for(uint i = 0; i < 30; i++) {
         Die tmp = {1, _h-1, 0};
         uint y = DieRoll::Roll(tmp);
         tmp.Set(1, _w-1, 0);
@@ -163,4 +163,22 @@ void Level::Generate() {
 
         if(_map[y][x].type == MAP_FLOOR) _map[y][x].items.push_back(Item::Generate());
     }
+}
+
+bool Level::HasItem(Vector2D pos) const {
+    return !_map[pos.y][pos.x].items.empty();
+}
+
+item_ptr Level::SeeItem(Vector2D pos) const {
+    return _map[pos.y][pos.x].items.back();
+}
+
+item_ptr Level::GetItem(Vector2D pos) {
+    item_ptr tmp = _map[pos.y][pos.x].items.back();
+    _map[pos.y][pos.x].items.pop_back();
+    return tmp;
+}
+
+void Level::PutItem(Vector2D pos, item_ptr item) {
+    _map[pos.y][pos.x].items.push_back(item);
 }

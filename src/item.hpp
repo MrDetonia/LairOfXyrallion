@@ -3,9 +3,13 @@
 
 #include "common.hpp"
 
+class Item;
+
 class Armour;
 class Weapon;
 class Ranged;
+
+typedef std::shared_ptr<Item> item_ptr;
 
 enum ItemCategories {
     ITEM_ARMOUR,
@@ -37,11 +41,12 @@ public:
 
     virtual ~Item() {}
 
+    std::string Name() const {return _name;};
     uint Category() const {return _category;}
     uint Type() const {return _type;}
     uint Weight() const {return _weight;}
 
-    static Item* Generate();
+    static item_ptr Generate();
 };
 
 #endif
