@@ -128,9 +128,9 @@ void Renderer::Write(std::string msg, int x, int y) {
 }
 
 void Renderer::Message(std::string msg) {
-    move(24,0);
+    move(21,0);
     clrtoeol();
-    mvaddstr(24,0,msg.c_str());
+    mvaddstr(21,0,msg.c_str());
 }
 
 void Renderer::DisplayStats(Character player) {

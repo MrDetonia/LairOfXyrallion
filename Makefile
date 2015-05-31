@@ -21,7 +21,7 @@ OBJDIR = obj
 BUILDDIR = bin
 
 # Executable to produce
-TARGET = RL
+TARGET = LoX
 
 # Directory to install to
 INSTDIR = /usr/local/bin
