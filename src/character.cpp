@@ -1,7 +1,7 @@
 #include "character.hpp"
 
-Character::Character(std::string name, unsigned int age, bool sex,
-        char race, char _class, char alignment)
+Character::Character(std::string name, uint age, bool sex,
+        uchar race, uchar _class, uchar alignment)
     : Creature(CREATURE_CHARACTER)
 {
     _name = name;

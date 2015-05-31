@@ -47,76 +47,20 @@ void Renderer::UpdateMap(Level& level, std::vector<Vector2D> vis) {
 }
 
 void Renderer::DrawTile(Tile& tile, int x, int y) {
-    char symbol;
+    mvaddch(y, x, tile_symbols[tile.type].sym);
 
-    switch(tile.type) {
-        case MAP_FLOOR:
-            symbol = '.';
-            break;
-
-        case MAP_WALL:
-            symbol = '#';
-            break;
-
-        case MAP_STAIR_UP:
-            symbol = '<';
-            break;
-
-        case MAP_STAIR_DOWN:
-            symbol = '>';
-            break;
-
-        default:
-            symbol = ' ';
-            break;
-    }
-
-    mvaddch(y, x, symbol);
-
-    if(!tile.items.empty()) {
-        switch(tile.items[0]->Category()) {
-            case ITEM_ARMOUR:
-                symbol = '[';
-                break;
-
-            case ITEM_WEAPON:
-                symbol = '(';
-                break;
-
-            case ITEM_RANGED:
-                symbol = '{';
-                break;
-
-            default:
-                symbol = ',';
-                break;
-        }
-
-        mvaddch(y, x, symbol);
-    }
+    /* if there are items here, draw the top item of the stack */
+    if(!tile.items.empty()) mvaddch(y, x, item_symbols[tile.items[0]->Category()].sym);
 }
 
-void Renderer::DrawCreature(Creature creature) {
-    char symbol;
-
-    switch(creature.Type()) {
-        case CREATURE_CHARACTER:
-        break;
+void Renderer::DrawCreature(Creature* creature) {
+    /* if the object passed is a character, cast to character and display symbol based on race */
+    if(creature->Type() == CREATURE_CHARACTER) {
+        mvaddch(creature->Y(), creature->X(), character_symbols[dynamic_cast<Character*>(creature)->Race()].sym);
     }
-
-    mvaddch(creature.Pos().y, creature.Pos().x, symbol);
-}
-
-void Renderer::DrawCharacter(Character character) {
-    char symbol;
-
-    switch(character.Race()) {
-        case RACE_HUMAN:
-            symbol = '@';
-            break;
+    else {
+        mvaddch(creature->Y(), creature->X(), creature_symbols[creature->Type()].sym);
     }
-
-    mvaddch(character.Pos().y, character.Pos().x, symbol);
 }
 
 int Renderer::GetKey() {

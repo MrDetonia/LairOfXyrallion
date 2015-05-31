@@ -51,23 +51,23 @@ enum Alignments {
 
 class Character : public Creature {
     std::string _name;
-    unsigned int _age;
+    uint _age;
     bool _sex;
-    char _race;
-    char __class;
-    char _alignment;
+    uchar _race;
+    uchar __class;
+    uchar _alignment;
 
 public:
-    Character(std::string name, unsigned int age = 30, bool sex = true,
-            char race = RACE_HUMAN, char _class = CLASS_FIGHTER,
-            char alignment = TRUE_NEUTRAL);
+    Character(std::string name, uint age = 30, bool sex = true,
+            uchar race = RACE_HUMAN, uchar _class = CLASS_FIGHTER,
+            uchar alignment = TRUE_NEUTRAL);
 
     std::string Name() const {return _name;};
-    unsigned int Age() const {return _age;};
+    uint Age() const {return _age;};
     bool Sex() const {return _sex;};
-    char Race() const {return _race;};
-    char Class() const {return __class;};
-    char Alignment() const {return _alignment;};
+    uchar Race() const {return _race;};
+    uchar Class() const {return __class;};
+    uchar Alignment() const {return _alignment;};
 };
 
 #endif

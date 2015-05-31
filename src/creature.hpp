@@ -31,7 +31,7 @@ enum CreatureTypes {
 };
 
 class Creature {
-    char _type;
+    uchar _type;
     uint _hp;
     uint _max_hp;
     uint _mp;
@@ -51,14 +51,14 @@ class Creature {
     void shadowcast(Level& level, uint x, uint y, uint radius, uint row, float start_slope, float end_slope, uint xx, uint xy, uint yx, uint yy);
 
 public:
-    Creature(char type);
+    Creature(uchar type);
 
     void AddPos(int x, int y) {_pos.x += x; _pos.y += y;};
     void Pos(Vector2D pos) {_pos = pos;};
     std::vector<Vector2D> Vis() const {return _vis;};
     void FOV(Level& level);
 
-    char Type() const {return _type;};
+    uchar Type() const {return _type;};
     uint Hp() const {return _hp;};
     uint MaxHp() const {return _max_hp;};
     uint Mp() const {return _mp;};
@@ -74,6 +74,9 @@ public:
     uint Int() const {return _int;};
     uint Wis() const {return _wis;};
     uint Cha() const {return _cha;};
+
+    /* VIRTUAL METHODS */
+    virtual uchar Race() const {return 255;};
 };
 
 #endif

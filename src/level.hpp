@@ -13,7 +13,7 @@ class Character;
 
 struct Tile {
     std::vector<item_ptr> items;
-    char type;
+    uchar type;
     bool passable;
     bool opaque;
 };

@@ -20,10 +20,10 @@ int Game::Execute() {
         /* LEVEL DRAWING */
         _player.FOV(_dungeon[level]);
         _renderer.ClearMap(_dungeon[level]);
-        _renderer.DrawCharacter(_player);
+        _renderer.UpdateMap(_dungeon[level], _player.Vis());
+        _renderer.DrawCreature(&_player);
 
         /* STATUS DRAWING */
-        _renderer.UpdateMap(_dungeon[level], _player.Vis());
         _renderer.DisplayStats(_player);
         std::string msg = "DLvl: " + std::to_string(level + 1) + "  ";
         _renderer.Write(msg, 0, 23);
@@ -34,8 +34,10 @@ int Game::Execute() {
             _renderer.Message(msg);
         }
 
+        /* always move cursor back to player when finished drawing */
         move(_player.Pos().y, _player.Pos().x);
 
+        /* KEY INPUT */
         switch(_renderer.GetKey()) {
             /* QUIT GAME */
             case 'q':

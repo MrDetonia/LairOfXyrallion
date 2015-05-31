@@ -1,7 +1,7 @@
 #include "creature.hpp"
 #include "level.hpp"
 
-Creature::Creature(char type) {
+Creature::Creature(uchar type) {
     // TODO: Add generation for stats depending on type
     _type = type;
     _hp = _max_hp = 8;
