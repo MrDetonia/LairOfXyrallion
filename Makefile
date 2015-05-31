@@ -6,7 +6,7 @@
 CC = g++
 
 # Compiler flags
-CFLAGS = -g -std=c++14 -Wall -Wextra -Wpedantic -Werror
+CFLAGS = -g -std=c++11 -Wall -Wextra -Wpedantic -Werror
 
 # Linker flags
 LFLAGS = -lcurses
