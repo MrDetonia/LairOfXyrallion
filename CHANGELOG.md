@@ -11,6 +11,7 @@ LoX uses version numbers in format w.x.y.z where:
 ## [0.1.0.1] - 2015-05-31
 ###Changed
 - Renderer now uses lookup table to determine which symbol to display tiles/items/creatures as.
+
 ### Fixed
 - Messages now print at line 21 rather than 24, which was offscreen on default 80x24 terminals.
 
