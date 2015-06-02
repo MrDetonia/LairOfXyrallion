@@ -6,15 +6,16 @@
 #include "character.hpp"
 
 class Game {
-    std::vector<Level> _dungeon;
-    Character _player;
-    std::vector<item_ptr> _inventory;
-    Renderer _renderer;
+    std::vector<Level> _dungeon;        // array of dungeons
+    Character _player;                  // player character
+    std::vector<item_ptr> _inventory;   // player inventory (TODO: Move to character class)
+    Renderer _renderer;                 // game renderer
 
 public:
     Game();
     ~Game();
 
+    /* method called to start the game, returns exit status */
     int Execute();
 };
 

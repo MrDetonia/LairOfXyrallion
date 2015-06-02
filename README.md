@@ -4,8 +4,7 @@
 ---
 [![Build Status](https://travis-ci.org/MrDetonia/LairOfXyrallion.svg?branch=master)](https://travis-ci.org/MrDetonia/LairOfXyrallion)
 
-**Warning:**
-Lair of Xyrallion is currently in a pre-alpha state, and will be largely unfinished and at times completely broken. As such, versioning and a formal changelog will only be introduced when the game reaches a state that can be described as 'playable' i.e. most core features are complete.
+**Current Version:** 0.2.0.0
 
 ---
 

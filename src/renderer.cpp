@@ -13,6 +13,18 @@ Renderer::Renderer() {
     cbreak();
     noecho();
     keypad(stdscr, true);
+
+    // initialise colours if supported by this terminal
+    if(has_colors()) {
+        start_color();
+        init_pair(COL_WHITE, COLOR_WHITE, COLOR_BLACK);
+        init_pair(COL_RED, COLOR_RED, COLOR_BLACK);
+        init_pair(COL_GREEN, COLOR_GREEN, COLOR_BLACK);
+        init_pair(COL_BLUE, COLOR_BLUE, COLOR_BLACK);
+        init_pair(COL_CYAN, COLOR_CYAN, COLOR_BLACK);
+        init_pair(COL_YELLOW, COLOR_YELLOW, COLOR_BLACK);
+        init_pair(COL_MAGENTA, COLOR_MAGENTA, COLOR_BLACK);
+    }
 }
 
 Renderer::~Renderer() {
@@ -47,19 +59,33 @@ void Renderer::UpdateMap(Level& level, std::vector<Vector2D> vis) {
 }
 
 void Renderer::DrawTile(Tile& tile, int x, int y) {
-    mvaddch(y, x, tile_symbols[tile.type].sym);
+    symbol_map _tile = tile_symbols[tile.type];
+    attron(COLOR_PAIR(_tile.col));
+    mvaddch(y, x, _tile.sym);
+    attroff(COLOR_PAIR(_tile.col));
 
     /* if there are items here, draw the top item of the stack */
-    if(!tile.items.empty()) mvaddch(y, x, item_symbols[tile.items[0]->Category()].sym);
+    if(!tile.items.empty()) {
+        symbol_map item = item_symbols[tile.items[0]->Category()];
+        attron(COLOR_PAIR(item.col));
+        mvaddch(y, x, item.sym);
+        attron(COLOR_PAIR(item.col));
+    }
 }
 
 void Renderer::DrawCreature(Creature* creature) {
     /* if the object passed is a character, cast to character and display symbol based on race */
     if(creature->Type() == CREATURE_CHARACTER) {
-        mvaddch(creature->Y(), creature->X(), character_symbols[dynamic_cast<Character*>(creature)->Race()].sym);
+        symbol_map _char = character_symbols[dynamic_cast<Character*>(creature)->Race()];
+        attron(COLOR_PAIR(_char.col));
+        mvaddch(creature->Y(), creature->X(), _char.sym);
+        attroff(COLOR_PAIR(_char.col));
     }
     else {
-        mvaddch(creature->Y(), creature->X(), creature_symbols[creature->Type()].sym);
+        symbol_map _creature = creature_symbols[creature->Type()];
+        attron(COLOR_PAIR(_creature.col));
+        mvaddch(creature->Y(), creature->X(), _creature.sym);
+        attroff(COLOR_PAIR(_creature.col));
     }
 }
 
@@ -68,13 +94,17 @@ int Renderer::GetKey() {
 }
 
 void Renderer::Write(std::string msg, int x, int y) {
+    attron(COLOR_PAIR(COL_WHITE));
     mvaddstr(y, x, msg.c_str());
+    attroff(COLOR_PAIR(COL_WHITE));
 }
 
 void Renderer::Message(std::string msg) {
     move(21,0);
     clrtoeol();
+    attron(COLOR_PAIR(COL_WHITE));
     mvaddstr(21,0,msg.c_str());
+    attroff(COLOR_PAIR(COL_WHITE));
 }
 
 void Renderer::DisplayStats(Character player) {
@@ -104,30 +134,6 @@ void Renderer::DisplayStats(Character player) {
 
         case RACE_HALF_ORC:
             line += "Half-Orc";
-            break;
-
-        case RACE_DROMITE:
-            line += "Dromite";
-            break;
-
-        case RACE_DUERGAR:
-            line += "Duergar";
-            break;
-
-        case RACE_ELAN:
-            line += "Elan";
-            break;
-
-        case RACE_HALF_GIANT:
-            line += "Half-Giant";
-            break;
-
-        case RACE_MAENAD:
-            line += "Maenad";
-            break;
-
-        case RACE_XEPH:
-            line += "Xeph";
             break;
     }
 
@@ -160,14 +166,6 @@ void Renderer::DisplayStats(Character player) {
             line += " Paladin";
             break;
 
-        case CLASS_PSION:
-            line += " Psion";
-            break;
-
-        case CLASS_PSYCHIC_WARRIOR:
-            line += " Psychic Warrior";
-            break;
-
         case CLASS_RANGER:
             line += " Ranger";
             break;
@@ -178,14 +176,6 @@ void Renderer::DisplayStats(Character player) {
 
         case CLASS_SORCEROR:
             line += " Sorceror";
-            break;
-
-        case CLASS_SOULKNIFE:
-            line += " Soulknife";
-            break;
-
-        case CLASS_WILDER:
-            line += " Wilder";
             break;
 
         case CLASS_WIZARD:
@@ -204,5 +194,5 @@ void Renderer::DisplayStats(Character player) {
     line += " XP:";
     line += std::to_string(player.Xp());
 
-    mvaddstr(22, 0, line.c_str());
+    Write(line, 0, 22);
 }

@@ -7,6 +7,7 @@
 #include "weapon.hpp"
 #include "ranged.hpp"
 
+/* lookup table of all armour in the game */
 const ArmourTemplate armourTemplates[] = {
     /* ARMOUR_HELMET */
     {ITEMTYPE_MUNDANE, ARMOUR_HELMET, "Leather Helmet", 5, 1},
@@ -57,6 +58,7 @@ const ArmourTemplate armourTemplates[] = {
     {ITEMTYPE_EPIC, ARMOUR_SHIELD, "Draconian Shield", 57, 10},
 };
 
+/* lookup table of all weapons in the game */
 const WeaponTemplate weaponTemplates[] = {
     /* WEAPON_SLASHING */
     {ITEMTYPE_MUNDANE, WEAPON_SLASHING, "Iron Dagger", 1, {1,4,0}, 2},
@@ -110,6 +112,7 @@ const WeaponTemplate weaponTemplates[] = {
     {ITEMTYPE_EPIC, WEAPON_BLUDGEONING, "Draconian Warhammer", 8, {1,8,10}, 4},
 };
 
+/* lookup table of all ranged weapons in the game */
 const RangedTemplate rangedTemplates[] = {
     {ITEMTYPE_MUNDANE, "Crossbow", 4, {1,8,0}, 2, 8},
     {ITEMTYPE_MUNDANE, "Shortbow", 2, {1,6,0}, 3, 6},

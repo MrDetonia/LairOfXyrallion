@@ -6,10 +6,15 @@ LoX uses version numbers in format w.x.y.z where:
 - y is the release status (0=alpha, 1=beta, 2=release candidate, 3=final)
 - z is the patch number
 
-## [Unreleased][unreleased]
+## 0.2.0.0 - 2015-06-02
+### Added
+- Now using colour on supported terminals
+
+### Removed
+- Removed Psionic races and classes
 
 ## [0.1.0.1] - 2015-05-31
-###Changed
+### Changed
 - Renderer now uses lookup table to determine which symbol to display tiles/items/creatures as.
 
 ### Fixed

@@ -3,6 +3,7 @@
 
 #include "item.hpp"
 
+/* template used to describe ranged items */
 struct RangedTemplate {
     uint type;
     std::string name;
@@ -13,11 +14,12 @@ struct RangedTemplate {
 };
 
 class Ranged : public Item {
-    Die _dmg;
-    uint _crit;
-    uint _range;
+    Die _dmg;       // damage die
+    uint _crit;     // critical multiplier
+    uint _range;    // range
 
 public:
+    /* constructor takes a RangedTemplate */
     Ranged(const RangedTemplate& rt) :
         Item(rt.name, ITEM_RANGED, rt.type, rt.weight),
         _dmg(rt.dmg),
@@ -25,6 +27,7 @@ public:
         _range(rt.range)
     {}
 
+    /* get methods for attributes */
     Die Dmg() const {return _dmg;}
     uint Crit() const {return _crit;}
     uint Range() const {return _range;}
