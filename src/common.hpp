@@ -2,7 +2,7 @@
 #define _LoX_COMMON
 
 /* version string */
-#define _LoX_VERSION 0.2.0.0
+#define _LoX_VERSION 0.1.0.2
 
 /* global external headers */
 #include <cstdio>

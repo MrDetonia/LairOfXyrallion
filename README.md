@@ -4,7 +4,7 @@
 ---
 [![Build Status](https://travis-ci.org/MrDetonia/LairOfXyrallion.svg?branch=master)](https://travis-ci.org/MrDetonia/LairOfXyrallion)
 
-**Current Version:** 0.2.0.0
+**Current Version:** 0.1.0.2
 
 ---
 
