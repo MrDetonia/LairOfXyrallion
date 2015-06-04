@@ -2,12 +2,6 @@
 
 // TODO: make this constructor more robust
 Renderer::Renderer() {
-    // allocate space for screen (std 80x24 terminal)
-    _screen = new char* [24];
-    for(int i = 0; i < 24; i++) {
-        _screen[i] = new char [80];
-    }
-
     // initialise curses
     initscr();
     cbreak();
@@ -30,12 +24,6 @@ Renderer::Renderer() {
 Renderer::~Renderer() {
     // close curses
     endwin();
-
-    // free memory used by screen
-    for(int i = 0; i < 24; i++) {
-        delete [] _screen[i];
-    }
-    delete [] _screen;
 }
 
 void Renderer::ClearMap(Level& level) {

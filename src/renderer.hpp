@@ -8,22 +8,36 @@
 #include <curses.h>
 
 class Renderer {
-    char** _screen;
-
 public:
     Renderer();
     ~Renderer();
 
+    /* this method clears the map for a level */
     void ClearMap(Level& level);
+
+    /* this method updates the map for a level */
     void UpdateMap(Level& level);
+
+    /* this method updates only visible parts of the map for a level */
     void UpdateMap(Level& level, std::vector<Vector2D> vis);
+
+    /* this method draws a tile at a specified location */
     void DrawTile(Tile& tile, int x, int y);
+
+    /* this method draws a creature at it's position */
     void DrawCreature(Creature* creature);
+
+    /* this method gets and returns a key press from the user */
     int GetKey();
+
+    /* this method writes a string at a specified location */
     void Write(std::string msg, int x, int y);
+
+    /* this method prints a message in the message area */
     void Message(std::string msg);
+
+    /* this method displays the player's stats in the status area */
     void DisplayStats(Character player);
-    void FOV(Level& level, uint x, uint y, uint radius);
 };
 
 enum DrawColours {
