@@ -8,6 +8,9 @@
 #include <ctime>
 #include <vector>
 
+#define LEVEL_WIDTH 62
+#define LEVEL_HEIGHT 22
+
 class Creature;
 class Character;
 

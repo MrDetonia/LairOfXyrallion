@@ -19,25 +19,36 @@ Renderer::Renderer() {
         init_pair(COL_YELLOW, COLOR_YELLOW, COLOR_BLACK);
         init_pair(COL_MAGENTA, COLOR_MAGENTA, COLOR_BLACK);
     }
+
+    /* initialise windows */
+    win_map = newwin(LINES - 2, COLS - 18, 0, 0);
+    win_msg = newwin(2, COLS, LINES - 2, 0);
+    win_stats = newwin(LINES - 2, 18, 0, COLS - 18);
+    scrollok(win_msg, TRUE);
+    box(win_stats, 0, 0);
+    refresh();
 }
 
 Renderer::~Renderer() {
     // close curses
+    delwin(win_map);
+    delwin(win_msg);
+    delwin(win_stats);
     endwin();
+}
+
+void Renderer::DrawMap(Level& level, Character& player) {
+    player.FOV(level);
+    ClearMap(level);
+    UpdateMap(level, player.Vis());
+    DrawCreature(&player);
+    wrefresh(win_map);
 }
 
 void Renderer::ClearMap(Level& level) {
     for(uint y = 0; y < level.H(); y++) {
         for(uint x = 0; x < level.W(); x++) {
-            mvaddch(y, x, ' ');
-        }
-    }
-}
-
-void Renderer::UpdateMap(Level& level) {
-    for(uint y = 0; y < level.H(); y++) {
-        for(uint x = 0; x < level.W(); x++) {
-            DrawTile(level.Map()[y][x], x, y);
+            mvwaddch(win_map, y, x, ' ');
         }
     }
 }
@@ -48,16 +59,16 @@ void Renderer::UpdateMap(Level& level, std::vector<Vector2D> vis) {
 
 void Renderer::DrawTile(Tile& tile, int x, int y) {
     symbol_map _tile = tile_symbols[tile.type];
-    attron(COLOR_PAIR(_tile.col));
-    mvaddch(y, x, _tile.sym);
-    attroff(COLOR_PAIR(_tile.col));
+    wattron(win_map, COLOR_PAIR(_tile.col));
+    mvwaddch(win_map, y, x, _tile.sym);
+    wattroff(win_map, COLOR_PAIR(_tile.col));
 
     /* if there are items here, draw the top item of the stack */
     if(!tile.items.empty()) {
         symbol_map item = item_symbols[tile.items[0]->Category()];
-        attron(COLOR_PAIR(item.col));
-        mvaddch(y, x, item.sym);
-        attron(COLOR_PAIR(item.col));
+        wattron(win_map, COLOR_PAIR(item.col));
+        mvwaddch(win_map, y, x, item.sym);
+        wattron(win_map, COLOR_PAIR(item.col));
     }
 }
 
@@ -65,15 +76,15 @@ void Renderer::DrawCreature(Creature* creature) {
     /* if the object passed is a character, cast to character and display symbol based on race */
     if(creature->Type() == CREATURE_CHARACTER) {
         symbol_map _char = character_symbols[dynamic_cast<Character*>(creature)->Race()];
-        attron(COLOR_PAIR(_char.col));
-        mvaddch(creature->Y(), creature->X(), _char.sym);
-        attroff(COLOR_PAIR(_char.col));
+        wattron(win_map, COLOR_PAIR(_char.col));
+        mvwaddch(win_map, creature->Y(), creature->X(), _char.sym);
+        wattroff(win_map, COLOR_PAIR(_char.col));
     }
     else {
         symbol_map _creature = creature_symbols[creature->Type()];
-        attron(COLOR_PAIR(_creature.col));
-        mvaddch(creature->Y(), creature->X(), _creature.sym);
-        attroff(COLOR_PAIR(_creature.col));
+        wattron(win_map, COLOR_PAIR(_creature.col));
+        mvwaddch(win_map, creature->Y(), creature->X(), _creature.sym);
+        wattroff(win_map, COLOR_PAIR(_creature.col));
     }
 }
 
@@ -82,105 +93,126 @@ int Renderer::GetKey() {
 }
 
 void Renderer::Write(std::string msg, int x, int y) {
-    attron(COLOR_PAIR(COL_WHITE));
-    mvaddstr(y, x, msg.c_str());
-    attroff(COLOR_PAIR(COL_WHITE));
+    wattron(win_map, COLOR_PAIR(COL_WHITE));
+    mvwaddstr(win_map, y, x, msg.c_str());
+    wattroff(win_map, COLOR_PAIR(COL_WHITE));
 }
 
 void Renderer::Message(std::string msg) {
-    move(21,0);
-    clrtoeol();
-    attron(COLOR_PAIR(COL_WHITE));
-    mvaddstr(21,0,msg.c_str());
-    attroff(COLOR_PAIR(COL_WHITE));
+    scroll(win_msg);
+    wattron(win_msg, COLOR_PAIR(COL_WHITE));
+    mvwprintw(win_msg, 1, 0, "%s", msg.c_str());
+    wattroff(win_msg, COLOR_PAIR(COL_WHITE));
+    wrefresh(win_msg);
 }
 
-void Renderer::DisplayStats(Character player) {
-    std::string line = player.Name();
-    line += " the ";
+void Renderer::DrawStats(Character player, uchar level) {
+    /* display name */
+    std::string str = player.Name();
+    mvwaddstr(win_stats, 1, 1, str.c_str());
 
+    /* display race */
     switch(player.Race()) {
         case RACE_HUMAN:
-            line += "Human";
+            str = "Human";
             break;
 
         case RACE_ELF:
-            line += "Elven";
+            str = "Elven";
             break;
 
         case RACE_DWARF:
-            line += "Dwarven";
+            str = "Dwarven";
             break;
 
         case RACE_HALFLING:
-            line += "Halfling";
+            str = "Halfling";
             break;
 
         case RACE_GNOME:
-            line += "Gnome";
+            str = "Gnome";
             break;
 
         case RACE_HALF_ORC:
-            line += "Half-Orc";
+            str = "Half-Orc";
             break;
     }
 
+    mvwaddstr(win_stats, 2, 1, str.c_str());
+
+    /* display class */
     switch(player.Class()) {
         case CLASS_BARBARIAN:
-            line += " Barbarian";
+            str = "Barbarian";
             break;
 
         case CLASS_BARD:
-            line += " Bard";
+            str = "Bard";
             break;
 
         case CLASS_CLERIC:
-            line += " Cleric";
+            str = "Cleric";
             break;
 
         case CLASS_DRUID:
-            line += " Druid";
+            str = "Druid";
             break;
 
         case CLASS_FIGHTER:
-            line += " Fighter";
+            str = "Fighter";
             break;
 
         case CLASS_MONK:
-            line += " Monk";
+            str = "Monk";
             break;
 
         case CLASS_PALADIN:
-            line += " Paladin";
+            str = "Paladin";
             break;
 
         case CLASS_RANGER:
-            line += " Ranger";
+            str = "Ranger";
             break;
 
         case CLASS_ROGUE:
-            line += " Rogue";
+            str = "Rogue";
             break;
 
         case CLASS_SORCEROR:
-            line += " Sorceror";
+            str = "Sorceror";
             break;
 
         case CLASS_WIZARD:
-            line += " Wizard";
+            str = "Wizard";
             break;
     }
 
-    line += " HP:";
-    line += std::to_string(player.Hp());
-    line += "/";
-    line += std::to_string(player.MaxHp());
-    line += " MP:";
-    line += std::to_string(player.Mp());
-    line += "/";
-    line += std::to_string(player.MaxMp());
-    line += " XP:";
-    line += std::to_string(player.Xp());
+    mvwaddstr(win_stats, 3, 1, str.c_str());
 
-    Write(line, 0, 22);
+    /* display hit points */
+    str = "HP:";
+    str += std::to_string(player.Hp());
+    str += "/";
+    str += std::to_string(player.MaxHp());
+    mvwaddstr(win_stats, 5, 1, str.c_str());
+
+    /* display mana points */
+    str = "MP:";
+    str += std::to_string(player.Mp());
+    str += "/";
+    str += std::to_string(player.MaxMp());
+    mvwaddstr(win_stats, 6, 1, str.c_str());
+
+    /* display experience */
+    str = "XP:";
+    str += std::to_string(player.Xp());
+    mvwaddstr(win_stats, 7, 1, str.c_str());
+
+    /* display dungeon level */
+    str = "DLvl:";
+    str += std::to_string(level+1);
+    mvwaddstr(win_stats, 9, 1, str.c_str());
+
+    /* draw window */
+    wrefresh(win_stats);
 }

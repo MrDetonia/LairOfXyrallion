@@ -8,15 +8,13 @@
 #include <curses.h>
 
 class Renderer {
-public:
-    Renderer();
-    ~Renderer();
+    /* game windows */
+    WINDOW* win_map;
+    WINDOW* win_msg;
+    WINDOW* win_stats;
 
     /* this method clears the map for a level */
     void ClearMap(Level& level);
-
-    /* this method updates the map for a level */
-    void UpdateMap(Level& level);
 
     /* this method updates only visible parts of the map for a level */
     void UpdateMap(Level& level, std::vector<Vector2D> vis);
@@ -26,6 +24,13 @@ public:
 
     /* this method draws a creature at it's position */
     void DrawCreature(Creature* creature);
+
+public:
+    Renderer();
+    ~Renderer();
+
+    /* this method handles the draw process for a level */
+    void DrawMap(Level& level, Character& player);
 
     /* this method gets and returns a key press from the user */
     int GetKey();
@@ -37,9 +42,10 @@ public:
     void Message(std::string msg);
 
     /* this method displays the player's stats in the status area */
-    void DisplayStats(Character player);
+    void DrawStats(Character player, uchar level);
 };
 
+/* enumeration of colour pairs we register with curses */
 enum DrawColours {
     COL_WHITE=1,
     COL_RED,
@@ -50,12 +56,14 @@ enum DrawColours {
     COL_MAGENTA
 };
 
+/* structure used to create symbol maps */
 struct symbol_map {
     uint type;
     char sym;
     char col;
 };
 
+/* symbol map for map tiles */
 const symbol_map tile_symbols[] = {
     {MAP_FLOOR, '.', COL_WHITE},
     {MAP_WALL, '#', COL_WHITE},
@@ -63,12 +71,14 @@ const symbol_map tile_symbols[] = {
     {MAP_STAIR_DOWN, '>', COL_WHITE},
 };
 
+/* symbol map for items */
 const symbol_map item_symbols[] = {
     {ITEM_ARMOUR, '[', COL_RED},
     {ITEM_WEAPON, '(', COL_CYAN},
     {ITEM_RANGED, '{', COL_GREEN},
 };
 
+/* symbol map for creatures */
 const symbol_map creature_symbols[] = {
     {CREATURE_BUGBEAR, 'b', COL_YELLOW},
     {CREATURE_CENTAUR, 'c', COL_MAGENTA},
@@ -93,6 +103,7 @@ const symbol_map creature_symbols[] = {
     {CREATURE_UNBODIED, 'z', COL_WHITE},
 };
 
+/* symbol map for characters/races */
 const symbol_map character_symbols[] = {
     {RACE_HUMAN, '@', COL_WHITE},
     {RACE_ELF, 'E', COL_WHITE},
