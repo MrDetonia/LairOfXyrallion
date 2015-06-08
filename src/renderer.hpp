@@ -7,6 +7,17 @@
 
 #include <curses.h>
 
+/* enumeration of colour pairs we register with curses */
+enum DrawColours {
+    COL_WHITE=1,
+    COL_RED,
+    COL_GREEN,
+    COL_BLUE,
+    COL_CYAN,
+    COL_YELLOW,
+    COL_MAGENTA
+};
+
 class Renderer {
     /* game windows */
     WINDOW* win_map;
@@ -36,24 +47,13 @@ public:
     int GetKey();
 
     /* this method writes a string at a specified location */
-    void Write(std::string msg, int x, int y);
+    void Write(std::string msg, int x, int y, int colour=COL_WHITE);
 
     /* this method prints a message in the message area */
     void Message(std::string msg);
 
     /* this method displays the player's stats in the status area */
     void DrawStats(Character player, uchar level);
-};
-
-/* enumeration of colour pairs we register with curses */
-enum DrawColours {
-    COL_WHITE=1,
-    COL_RED,
-    COL_GREEN,
-    COL_BLUE,
-    COL_CYAN,
-    COL_YELLOW,
-    COL_MAGENTA
 };
 
 /* structure used to create symbol maps */

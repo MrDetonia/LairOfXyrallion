@@ -6,6 +6,10 @@ LoX uses version numbers in format w.x.y.z where:
 - y is the release status (0=alpha, 1=beta, 2=release candidate, 3=final)
 - z is the patch number
 
+## [Unreleased][unreleased]
+##Added
+- Main menu
+
 ## [0.1.0.3] - 2015-06-07
 ##Added
 - Window system for easier drawing management and neater screen layout

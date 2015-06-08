@@ -51,6 +51,7 @@ void Renderer::ClearMap(Level& level) {
             mvwaddch(win_map, y, x, ' ');
         }
     }
+    refresh();
 }
 
 void Renderer::UpdateMap(Level& level, std::vector<Vector2D> vis) {
@@ -92,10 +93,10 @@ int Renderer::GetKey() {
     return getch();
 }
 
-void Renderer::Write(std::string msg, int x, int y) {
-    wattron(win_map, COLOR_PAIR(COL_WHITE));
-    mvwaddstr(win_map, y, x, msg.c_str());
-    wattroff(win_map, COLOR_PAIR(COL_WHITE));
+void Renderer::Write(std::string msg, int x, int y, int colour) {
+    attron(COLOR_PAIR(colour));
+    mvaddstr(y, x, msg.c_str());
+    attroff(COLOR_PAIR(colour));
 }
 
 void Renderer::Message(std::string msg) {
