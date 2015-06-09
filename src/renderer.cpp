@@ -26,7 +26,6 @@ Renderer::Renderer() {
     win_msg = newwin(2, COLS, LINES - 2, 0);
     win_stats = newwin(LINES - 2, COLS / 4, 0, COLS - (COLS / 4));
     scrollok(win_msg, TRUE);
-    box(win_stats, 0, 0);
     refresh();
 }
 
@@ -124,6 +123,12 @@ void Renderer::Message(std::string msg) {
 }
 
 void Renderer::DrawStats(Character player, uchar level) {
+    /* clear window first */
+    wclear(win_stats);
+
+    /* nice border */
+    box(win_stats, 0, 0);
+
     /* display name */
     std::string str = player.Name();
     wattron(win_stats, COLOR_PAIR(COL_YELLOW));
