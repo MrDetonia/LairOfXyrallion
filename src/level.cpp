@@ -155,7 +155,7 @@ void Level::Generate() {
     delete [] flooded_map;
 
     // scatter items around level
-    for(uint i = 0; i < 30; i++) {
+    for(uint i = 0; i < LEVEL_HEIGHT / 2; i++) {
         Die tmp = {1, _h-1, 0};
         uint y = DieRoll::Roll(tmp);
         tmp.Set(1, _w-1, 0);

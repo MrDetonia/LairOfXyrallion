@@ -46,7 +46,7 @@ void MenuMain::Draw() {
     _ren.Write(str, x, ++y);
 
     /* new game option */
-    str = "New Game";
+    str = "Start Game";
     x = (COLS / 2) - (str.length() / 2);
     y += 2;
     if(_menupos == MENU_MAIN_ITEM_NEW) _ren.Write(str, x, y, COL_RED);

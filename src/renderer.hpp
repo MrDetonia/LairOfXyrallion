@@ -25,10 +25,10 @@ class Renderer {
     WINDOW* win_stats;
 
     /* this method clears the map for a level */
-    void ClearMap(Level& level);
+    void ClearMap();
 
     /* this method updates only visible parts of the map for a level */
-    void UpdateMap(Level& level, std::vector<Vector2D> vis);
+    void UpdateMap(Level& level, Character player);
 
     /* this method draws a tile at a specified location */
     void DrawTile(Tile& tile, int x, int y);

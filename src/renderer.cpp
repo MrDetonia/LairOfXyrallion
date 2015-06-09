@@ -7,6 +7,7 @@ Renderer::Renderer() {
     cbreak();
     noecho();
     keypad(stdscr, true);
+    curs_set(0);
 
     // initialise colours if supported by this terminal
     if(has_colors()) {
@@ -39,23 +40,32 @@ Renderer::~Renderer() {
 
 void Renderer::DrawMap(Level& level, Character& player) {
     player.FOV(level);
-    ClearMap(level);
-    UpdateMap(level, player.Vis());
+    ClearMap();
+    UpdateMap(level, player);
     DrawCreature(&player);
     wrefresh(win_map);
 }
 
-void Renderer::ClearMap(Level& level) {
-    for(uint y = 0; y < level.H(); y++) {
-        for(uint x = 0; x < level.W(); x++) {
+void Renderer::ClearMap() {
+    uint maxx, maxy;
+    getmaxyx(win_map, maxy, maxx);
+    for(uint y = 0; y < maxy; y++) {
+        for(uint x = 0; x < maxx; x++) {
             mvwaddch(win_map, y, x, ' ');
         }
     }
     refresh();
 }
 
-void Renderer::UpdateMap(Level& level, std::vector<Vector2D> vis) {
-    for(Vector2D &pos: vis) DrawTile(level.Map()[pos.y][pos.x], pos.x, pos.y);
+void Renderer::UpdateMap(Level& level, Character player) {
+    /* calculate drawing offsets */
+    uint maxx, maxy;
+    getmaxyx(win_map, maxy, maxx);
+    int xoffset = player.X() - (maxx / 2);
+    int yoffset = player.Y() - (maxy / 2);
+
+    /* draw all tiles visible to the player */
+    for(Vector2D &pos: player.Vis()) DrawTile(level.Map()[pos.y][pos.x], pos.x - xoffset, pos.y - yoffset);
 }
 
 void Renderer::DrawTile(Tile& tile, int x, int y) {
@@ -74,17 +84,23 @@ void Renderer::DrawTile(Tile& tile, int x, int y) {
 }
 
 void Renderer::DrawCreature(Creature* creature) {
+    /* calculate drawing offsets */
+    uint maxx, maxy;
+    getmaxyx(win_map, maxy, maxx);
+    int xoffset = creature->X() - (maxx / 2);
+    int yoffset = creature->Y() - (maxy / 2);
+
     /* if the object passed is a character, cast to character and display symbol based on race */
     if(creature->Type() == CREATURE_CHARACTER) {
         symbol_map _char = character_symbols[dynamic_cast<Character*>(creature)->Race()];
         wattron(win_map, COLOR_PAIR(_char.col));
-        mvwaddch(win_map, creature->Y(), creature->X(), _char.sym);
+        mvwaddch(win_map, creature->Y() - yoffset, creature->X() - xoffset, _char.sym);
         wattroff(win_map, COLOR_PAIR(_char.col));
     }
     else {
         symbol_map _creature = creature_symbols[creature->Type()];
         wattron(win_map, COLOR_PAIR(_creature.col));
-        mvwaddch(win_map, creature->Y(), creature->X(), _creature.sym);
+        mvwaddch(win_map, creature->Y() - yoffset, creature->X() - xoffset, _creature.sym);
         wattroff(win_map, COLOR_PAIR(_creature.col));
     }
 }

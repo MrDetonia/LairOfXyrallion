@@ -8,8 +8,8 @@
 #include <ctime>
 #include <vector>
 
-#define LEVEL_WIDTH 62
-#define LEVEL_HEIGHT 22
+#define LEVEL_WIDTH 64
+#define LEVEL_HEIGHT 64
 
 class Creature;
 class Character;
