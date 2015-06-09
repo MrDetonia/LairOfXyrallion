@@ -22,9 +22,9 @@ Renderer::Renderer() {
     }
 
     /* initialise windows */
-    win_map = newwin(LINES - 2, COLS - 18, 0, 0);
+    win_map = newwin(LINES - 2, COLS - (COLS / 4), 0, 0);
     win_msg = newwin(2, COLS, LINES - 2, 0);
-    win_stats = newwin(LINES - 2, 18, 0, COLS - 18);
+    win_stats = newwin(LINES - 2, COLS / 4, 0, COLS - (COLS / 4));
     scrollok(win_msg, TRUE);
     box(win_stats, 0, 0);
     refresh();
@@ -126,6 +126,7 @@ void Renderer::Message(std::string msg) {
 void Renderer::DrawStats(Character player, uchar level) {
     /* display name */
     std::string str = player.Name();
+    wattron(win_stats, COLOR_PAIR(COL_YELLOW));
     mvwaddstr(win_stats, 1, 1, str.c_str());
 
     /* display race */
@@ -155,80 +156,87 @@ void Renderer::DrawStats(Character player, uchar level) {
             break;
     }
 
-    mvwaddstr(win_stats, 2, 1, str.c_str());
-
     /* display class */
     switch(player.Class()) {
         case CLASS_BARBARIAN:
-            str = "Barbarian";
+            str += " Barbarian";
             break;
 
         case CLASS_BARD:
-            str = "Bard";
+            str += " Bard";
             break;
 
         case CLASS_CLERIC:
-            str = "Cleric";
+            str += " Cleric";
             break;
 
         case CLASS_DRUID:
-            str = "Druid";
+            str += " Druid";
             break;
 
         case CLASS_FIGHTER:
-            str = "Fighter";
+            str += " Fighter";
             break;
 
         case CLASS_MONK:
-            str = "Monk";
+            str += " Monk";
             break;
 
         case CLASS_PALADIN:
-            str = "Paladin";
+            str += " Paladin";
             break;
 
         case CLASS_RANGER:
-            str = "Ranger";
+            str += " Ranger";
             break;
 
         case CLASS_ROGUE:
-            str = "Rogue";
+            str += " Rogue";
             break;
 
         case CLASS_SORCEROR:
-            str = "Sorceror";
+            str += " Sorceror";
             break;
 
         case CLASS_WIZARD:
-            str = "Wizard";
+            str += " Wizard";
             break;
     }
 
-    mvwaddstr(win_stats, 3, 1, str.c_str());
+    mvwaddstr(win_stats, 2, 1, str.c_str());
+    wattroff(win_stats, COLOR_PAIR(COL_YELLOW));
 
     /* display hit points */
     str = "HP:";
     str += std::to_string(player.Hp());
     str += "/";
     str += std::to_string(player.MaxHp());
-    mvwaddstr(win_stats, 5, 1, str.c_str());
+    mvwaddstr(win_stats, 4, 1, str.c_str());
 
     /* display mana points */
     str = "MP:";
     str += std::to_string(player.Mp());
     str += "/";
     str += std::to_string(player.MaxMp());
-    mvwaddstr(win_stats, 6, 1, str.c_str());
+    mvwaddstr(win_stats, 5, 1, str.c_str());
 
     /* display experience */
     str = "XP:";
     str += std::to_string(player.Xp());
-    mvwaddstr(win_stats, 7, 1, str.c_str());
+    mvwaddstr(win_stats, 6, 1, str.c_str());
 
     /* display dungeon level */
     str = "DLvl:";
     str += std::to_string(level+1);
-    mvwaddstr(win_stats, 9, 1, str.c_str());
+    mvwaddstr(win_stats, 8, 1, str.c_str());
+
+    /* DEBUG INFO */
+    /* display position */
+    str = "X:";
+    str += std::to_string(player.X());
+    str += " Y:";
+    str += std::to_string(player.Y());
+    mvwaddstr(win_stats, LINES-4, 1, str.c_str());
 
     /* draw window */
     wrefresh(win_stats);
