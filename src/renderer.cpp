@@ -230,17 +230,14 @@ void Renderer::DrawStats(Character player, uchar level) {
     str += std::to_string(player.Xp());
     mvwaddstr(win_stats, 6, 1, str.c_str());
 
-    /* display dungeon level */
-    str = "DLvl:";
-    str += std::to_string(level+1);
-    mvwaddstr(win_stats, 8, 1, str.c_str());
-
     /* DEBUG INFO */
     /* display position */
     str = "X:";
     str += std::to_string(player.X());
     str += " Y:";
     str += std::to_string(player.Y());
+    str += " Z:";
+    str += std::to_string(level+1);
     mvwaddstr(win_stats, LINES-4, 1, str.c_str());
 
     /* draw window */

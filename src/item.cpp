@@ -3,7 +3,7 @@
 #include "itemlist.hpp"
 
 item_ptr Item::Generate() {
-    Die die = {1, ITEM_RANGED, 0};
+    Die die = {1, ITEM_RANGED + 1, -1};
     uint cat = DieRoll::Roll(die);
 
     item_ptr item;

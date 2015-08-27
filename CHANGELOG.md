@@ -13,6 +13,9 @@ LoX uses version numbers in format w.x.y.z where:
 ##Changed
 - Map is now drawn dynamically, with the player always centered.
 
+##Fixed
+- Armour items can now be generated.
+
 ## [0.1.0.3] - 2015-06-07
 ##Added
 - Window system for easier drawing management and neater screen layout
